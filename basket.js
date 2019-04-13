@@ -16,7 +16,7 @@ class Basket {
 	};
 
 	applyRules() {
-		return this.rules.map(rule => rule.func)
+		return this.rules.map(rule => rule.func);
 	};
 
 	deleteRule(ruleToDelete) {

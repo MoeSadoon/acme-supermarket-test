@@ -56,7 +56,7 @@ describe('Basket', () => {
         {
           name: 'bar',
           func: () => {},
-        }
+        },
       ];
       // act
       const basket = new Basket(pricingRules);
@@ -95,12 +95,10 @@ describe('Basket', () => {
       expect(total).toBe(14.34);
     });
     it('should calculate total correctly with BOGOF Fruit Tea rule enabled', () => {
-      const pricingRules = [
-        { 
-          ruleName: 'fruit_tea_buy_one_get_one_free',
-          func: fruitTeaBOGOF,
-        }
-      ];
+      const pricingRules = [{ 
+        name: 'fruit_tea_buy_one_get_one_free',
+        func: fruitTeaBOGOF,
+      }];
       // act
       const basket = new Basket(pricingRules);
       basket.add('FR1');
@@ -112,12 +110,10 @@ describe('Basket', () => {
       expect(total).toBe(19.34);
     });
     it('should calculate total correctly with Strawberry offer rule enabled', () => {
-      const pricingRules = [
-        { 
-          ruleName: 'Strawberry offer',
-          func: threeOrMoreStrawberriesOffer,
-        }
-      ];
+      const pricingRules = [{ 
+        name: 'strawberry_offer',
+        func: threeOrMoreStrawberriesOffer,
+      }];
       // act
       const basket = new Basket(pricingRules);
       basket.add('SR1');
@@ -131,13 +127,13 @@ describe('Basket', () => {
     it('should calculate total correctly with both Fruit tea and Strawberry offer rules enabled', () => {
       const pricingRules = [
         { 
-          ruleName: 'fruitTea_BOGOF',
+          name: 'fruit_tea_buy_one_get_one_free',
           func: fruitTeaBOGOF,
         },
         { 
-          ruleName: 'Strawberry offer',
+          name: 'strawberry_offer',
           func: threeOrMoreStrawberriesOffer,
-        }
+        },
       ];
       // act
       const basket = new Basket(pricingRules);
@@ -150,6 +146,51 @@ describe('Basket', () => {
       const total = basket.total();
       // assert
       expect(total).toBe(27.84);
+    });
+    it('should add and apply rules on the fly', () => {
+      const pricingRules = [{ 
+        name: 'fruit_tea_buy_one_get_one_free',
+        func: fruitTeaBOGOF,
+      }];
+      // act
+      const basket = new Basket(pricingRules);
+      basket.add('SR1');
+      basket.add('SR1');
+      basket.add('FR1');
+      basket.add('SR1');
+      basket.add('FR1');
+      basket.add('CF1');
+      basket.addRule({ 
+        ruleName: 'strawberry_offer',
+        func: threeOrMoreStrawberriesOffer,
+      });
+      const total = basket.total();
+      // assert
+      expect(total).toBe(27.84);
+    })
+    it('should remove and sync rules on the fly', () => {
+      const pricingRules = [
+        { 
+          name: 'fruit_tea_buy_one_get_one_free',
+          func: fruitTeaBOGOF,
+        },
+        { 
+          name: 'strawberry_offer',
+          func: threeOrMoreStrawberriesOffer,
+        },
+      ];
+      // act
+      const basket = new Basket(pricingRules);
+      basket.add('SR1');
+      basket.add('SR1');
+      basket.add('FR1');
+      basket.add('SR1');
+      basket.add('FR1');
+      basket.add('CF1');
+      basket.deleteRule('fruit_tea_buy_one_get_one_free');
+      const total = basket.total();
+      // assert
+      expect(total).toBe(30.95);
     });
   });
 });
