@@ -1,4 +1,5 @@
 const Basket = require('./basket');
+const { fruitTeaBOGOF } = require('./rules');
 
 describe('Basket', () => {
   it('should instantiate basket with empty items list and any rules provided', () => {
@@ -41,6 +42,27 @@ describe('Basket', () => {
       expect(basket.rules).toEqual([...pricingRules, newRule]);
     });
   });
+  describe('applyRules', () => {
+    it('should return all the rule functions', () => {
+      // arrange
+      const pricingRules = [
+        {
+          name: 'foo',
+          func: () => {},
+        },
+        {
+          name: 'bar',
+          func: () => {},
+        }
+      ];
+      // act
+      const basket = new Basket(pricingRules);
+      const basketRuleFunctions = basket.applyRules();
+      // assert
+      expect(basketRuleFunctions.length).toEqual(pricingRules.length);
+      basketRuleFunctions.every(func => expect(typeof func).toBe('function'));
+    });
+  });
   describe('deleteRule', () => {
     it('should remove rule from the existing price rules list', () => {
       // arrange
@@ -66,6 +88,23 @@ describe('Basket', () => {
       const total = basket.total();
       // assert
       expect(total).toBe(14.34);
+    });
+    it('should calculate total correctly with BOGOF Fruit Tea rule enabled', () => {
+      const pricingRules = [
+        { 
+          ruleName: 'fruit_tea_buy_one_get_one_free',
+          func: fruitTeaBOGOF,
+        }
+      ];
+      // act
+      const basket = new Basket(pricingRules);
+      basket.add('FR1');
+      basket.add('SR1');
+      basket.add('FR1');
+      basket.add('CF1');
+      const total = basket.total();
+      // assert
+      expect(total).toBe(19.34);
     });
   });
 });

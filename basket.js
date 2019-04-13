@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { calculateRemaining, priceList } = require('./rules');
 
 class Basket {
@@ -14,12 +15,19 @@ class Basket {
 		this.rules.push(rule);
 	};
 
+	applyRules() {
+		return this.rules.map(rule => rule.func)
+	};
+
 	deleteRule(ruleToDelete) {
 		this.rules = [...this.rules.filter(rule => rule.name !== ruleToDelete )];
 	};
 
 	total() {
-		return calculateRemaining({items: [...this.items], prices: { ...priceList }});
+		return _.flow(
+			...this.applyRules(),
+			calculateRemaining,
+		)({ items: [...this.items], prices: { ...priceList }});
 	};
 };
 
