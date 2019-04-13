@@ -95,6 +95,7 @@ describe('Basket', () => {
       expect(total).toBe(14.34);
     });
     it('should calculate total correctly with BOGOF Fruit Tea rule enabled', () => {
+      // arrange
       const pricingRules = [{ 
         name: 'fruit_tea_buy_one_get_one_free',
         func: fruitTeaBOGOF,
@@ -110,6 +111,7 @@ describe('Basket', () => {
       expect(total).toBe(19.34);
     });
     it('should calculate total correctly with Strawberry offer rule enabled', () => {
+      // arrange
       const pricingRules = [{ 
         name: 'strawberry_offer',
         func: threeOrMoreStrawberriesOffer,
@@ -125,6 +127,7 @@ describe('Basket', () => {
       expect(total).toBe(16.61);
     });
     it('should calculate total correctly with both Fruit tea and Strawberry offer rules enabled', () => {
+      // arrange
       const pricingRules = [
         { 
           name: 'fruit_tea_buy_one_get_one_free',
@@ -148,6 +151,7 @@ describe('Basket', () => {
       expect(total).toBe(27.84);
     });
     it('should add and apply rules on the fly', () => {
+      // arrange
       const pricingRules = [{ 
         name: 'fruit_tea_buy_one_get_one_free',
         func: fruitTeaBOGOF,
@@ -169,6 +173,7 @@ describe('Basket', () => {
       expect(total).toBe(27.84);
     })
     it('should remove and sync rules on the fly', () => {
+      // arrange
       const pricingRules = [
         { 
           name: 'fruit_tea_buy_one_get_one_free',
