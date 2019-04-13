@@ -55,4 +55,17 @@ describe('Basket', () => {
       expect(basket.rules).toEqual([]);
     });
   });
+  describe('total', () => {
+    it('should calculate total price of items in basket', () => {
+      // arrange
+      const pricingRules = [];
+      // act
+      const basket = new Basket(pricingRules);
+      basket.add('CF1');
+      basket.add('FR1');
+      const total = basket.total();
+      // assert
+      expect(total).toBe(14.34);
+    });
+  });
 });

@@ -1,3 +1,5 @@
+const { calculateRemaining, priceList } = require('./rules');
+
 class Basket {
 	constructor(pricingRules = []) {
 		this.items = [];
@@ -14,6 +16,10 @@ class Basket {
 
 	deleteRule(ruleToDelete) {
 		this.rules = [...this.rules.filter(rule => rule.name !== ruleToDelete )];
+	};
+
+	total() {
+		return calculateRemaining({items: [...this.items], prices: { ...priceList }});
 	};
 };
 
