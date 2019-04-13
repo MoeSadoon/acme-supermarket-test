@@ -18,7 +18,7 @@ const calculateRemaining = ({ items, prices, total = 0}) => (
     }, total)
 );
 
-/* PRICE RULE: 2 for the price of 1 for Fruit Teas. */
+/* PRICE RULE(1): 2 for the price of 1 for Fruit Teas. */
 const fruitTeaBOGOF = ({ items, prices, total = 0}) => {
   /* Independently calculated price of tea with offer added to existing total price. */
   const newTotal =
@@ -31,8 +31,16 @@ const fruitTeaBOGOF = ({ items, prices, total = 0}) => {
   return { items: newBasketItems, prices, total: newTotal }
 };
 
+/* PRICE RULE(2): Reduces strawberry price to 4.50 each if 3 or more in basket */
+const threeOrMoreStrawberriesOffer = ({items, prices, total = 0}) => {
+	const strawberryPrice = items
+		.filter(item => item === 'SR1').length > 2 ? 4.50 : prices['SR1'];
+	return { items, prices: { ...prices, SR1: strawberryPrice}, total }
+};
+
 module.exports = {
   calculateRemaining,
   fruitTeaBOGOF,
   priceList,
+  threeOrMoreStrawberriesOffer,
 };
