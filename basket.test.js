@@ -5,7 +5,7 @@ describe('Basket', () => {
   it('should instantiate basket with empty items list and any rules provided', () => {
     // arrange
     const pricingRules = [{
-      foo: () => {},
+      foo: () => { },
     }];
     // act
     const basket = new Basket(pricingRules);
@@ -19,7 +19,7 @@ describe('Basket', () => {
       // arrange
       const pricingRules = [{
         name: 'foo',
-        func: () => {}, 
+        func: () => { },
       }];
       // act
       const basket = new Basket(pricingRules);
@@ -34,9 +34,9 @@ describe('Basket', () => {
       // arrange
       const pricingRules = [{
         name: 'foo',
-        func: () => {},
+        func: () => { },
       }];
-      const newRule = { name: 'bar', func: () => {} };
+      const newRule = { name: 'bar', func: () => { } };
       // act
       const basket = new Basket(pricingRules);
       basket.addRule(newRule);
@@ -51,11 +51,11 @@ describe('Basket', () => {
       const pricingRules = [
         {
           name: 'foo',
-          func: () => {},
+          func: () => { },
         },
         {
           name: 'bar',
-          func: () => {},
+          func: () => { },
         },
       ];
       // act
@@ -72,7 +72,7 @@ describe('Basket', () => {
       // arrange
       const pricingRules = [{
         name: 'foo',
-        func: () => {},
+        func: () => { },
       }];
       // act
       const basket = new Basket(pricingRules);
@@ -96,7 +96,7 @@ describe('Basket', () => {
     });
     it('should calculate total correctly with BOGOF Fruit Tea rule enabled', () => {
       // arrange
-      const pricingRules = [{ 
+      const pricingRules = [{
         name: 'fruit_tea_buy_one_get_one_free',
         func: fruitTeaBOGOF,
       }];
@@ -112,7 +112,7 @@ describe('Basket', () => {
     });
     it('should calculate total correctly with Strawberry offer rule enabled', () => {
       // arrange
-      const pricingRules = [{ 
+      const pricingRules = [{
         name: 'strawberry_offer',
         func: threeOrMoreStrawberriesOffer,
       }];
@@ -129,11 +129,11 @@ describe('Basket', () => {
     it('should calculate total correctly with both Fruit tea and Strawberry offer rules enabled', () => {
       // arrange
       const pricingRules = [
-        { 
+        {
           name: 'fruit_tea_buy_one_get_one_free',
           func: fruitTeaBOGOF,
         },
-        { 
+        {
           name: 'strawberry_offer',
           func: threeOrMoreStrawberriesOffer,
         },
@@ -152,7 +152,7 @@ describe('Basket', () => {
     });
     it('should add and apply rules on the fly', () => {
       // arrange
-      const pricingRules = [{ 
+      const pricingRules = [{
         name: 'fruit_tea_buy_one_get_one_free',
         func: fruitTeaBOGOF,
       }];
@@ -164,7 +164,7 @@ describe('Basket', () => {
       basket.add('SR1');
       basket.add('FR1');
       basket.add('CF1');
-      basket.addRule({ 
+      basket.addRule({
         ruleName: 'strawberry_offer',
         func: threeOrMoreStrawberriesOffer,
       });
@@ -175,11 +175,11 @@ describe('Basket', () => {
     it('should remove and sync rules on the fly', () => {
       // arrange
       const pricingRules = [
-        { 
+        {
           name: 'fruit_tea_buy_one_get_one_free',
           func: fruitTeaBOGOF,
         },
-        { 
+        {
           name: 'strawberry_offer',
           func: threeOrMoreStrawberriesOffer,
         },

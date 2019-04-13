@@ -20,14 +20,14 @@ class Basket {
 	};
 
 	deleteRule(ruleToDelete) {
-		this.rules = [...this.rules.filter(rule => rule.name !== ruleToDelete )];
+		this.rules = [...this.rules.filter(rule => rule.name !== ruleToDelete)];
 	};
 
 	total() {
 		return _.flow(
 			...this.applyRules(),
 			calculateRemaining,
-		)({ items: [...this.items], prices: { ...priceList }});
+		)({ items: [...this.items], prices: { ...priceList } });
 	};
 };
 
